@@ -16,7 +16,6 @@ public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
 	private String id;
 
 	private String email;
@@ -30,9 +29,9 @@ public class Member implements Serializable {
 	@Column(name="last_name")
 	private String lastName;
 
-	//bi-directional one-to-one association to Account
+	//bi-directional many-to-one association to Account
 	@OneToOne(mappedBy="member")
-	private Account accounts;
+	private Account account;
 
 	//bi-directional many-to-one association to BookTransaction
 	@OneToMany(mappedBy="member")
@@ -81,12 +80,12 @@ public class Member implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Account getAccounts() {
-		return this.accounts;
+	public Account getAccount() {
+		return this.account;
 	}
 
-	public void setAccounts(Account accounts) {
-		this.accounts = accounts;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public List<BookTransaction> getBookTransactions() {

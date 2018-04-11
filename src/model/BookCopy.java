@@ -16,7 +16,6 @@ public class BookCopy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
 	private String id;
 
 	private String edition;
