@@ -7,7 +7,6 @@
 		<class>model.BookTransaction</class>
 		<class>model.Book</class>
 		<class>model.Member</class>
-		<class>model.Testconnection</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver"

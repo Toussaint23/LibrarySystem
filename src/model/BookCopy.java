@@ -20,7 +20,7 @@ public class BookCopy implements Serializable {
 
 	private String edition;
 
-	private byte isAvailable;
+	private int isAvailable;
 
 	//bi-directional many-to-one association to Book
 	@ManyToOne
@@ -34,7 +34,7 @@ public class BookCopy implements Serializable {
 	public BookCopy() {
 	}
 	
-	public BookCopy(String edition, byte isAvailable) {
+	public BookCopy(String edition, int isAvailable) {
 		this.edition = edition;
 		this.isAvailable = isAvailable;
 	}
@@ -55,7 +55,7 @@ public class BookCopy implements Serializable {
 		this.edition = edition;
 	}
 
-	public byte getIsAvailable() {
+	public int getIsAvailable() {
 		return this.isAvailable;
 	}
 
