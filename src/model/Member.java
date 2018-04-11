@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +42,17 @@ public class Member implements Serializable {
 
 	public Member() {
 	}
+
+	
+	public Member(String id, String email, String firstName, byte isSuperMember, String lastName) {
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.isSuperMember = isSuperMember;
+		this.lastName = lastName;
+		this.bookTransactions = new ArrayList<BookTransaction>();
+	}
+
 
 	public String getId() {
 		return this.id;

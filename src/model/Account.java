@@ -25,6 +25,14 @@ public class Account implements Serializable {
 	public Account() {
 	}
 
+	public Account(String user, String password) {
+		this.id = new AccountPK();
+		this.id.setUsername(user);
+		this.id.setPassword(password);
+	}
+
+
+
 	public AccountPK getId() {
 		return this.id;
 	}
