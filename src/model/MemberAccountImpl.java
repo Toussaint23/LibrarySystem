@@ -1,7 +1,7 @@
 package model;
 
-public class MemberAccountImpl implements MemberAccountInterface{
-	
+public class MemberAccountImpl implements MemberAccountInterface {
+
 	Member member;
 	Account account;
 

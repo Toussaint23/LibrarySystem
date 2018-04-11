@@ -33,6 +33,11 @@ public class BookCopy implements Serializable {
 
 	public BookCopy() {
 	}
+	
+	public BookCopy(String edition, byte isAvailable) {
+		this.edition = edition;
+		this.isAvailable = isAvailable;
+	}
 
 	public String getId() {
 		return this.id;
