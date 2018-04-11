@@ -26,7 +26,7 @@ public class Member implements Serializable {
 	private String firstName;
 
 	@Column(name="is_super_member")
-	private byte isSuperMember;
+	private int isSuperMember;
 
 	@Column(name="last_name")
 	private String lastName;
@@ -43,7 +43,7 @@ public class Member implements Serializable {
 	}
 
 	
-	public Member(String id, String email, String firstName, byte isSuperMember, String lastName) {
+	public Member(String id, String email, String firstName, int isSuperMember, String lastName) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
@@ -77,11 +77,11 @@ public class Member implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public byte getIsSuperMember() {
+	public int getIsSuperMember() {
 		return this.isSuperMember;
 	}
 
-	public void setIsSuperMember(byte isSuperMember) {
+	public void setIsSuperMember(int isSuperMember) {
 		this.isSuperMember = isSuperMember;
 	}
 
