@@ -1,9 +1,32 @@
 package controller;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import model.Member;
+import model.MemberAccountFactory;
+import model.MemberAccountImpl;
+
 public class Admin {
-	
-	public void EnregistrerMember() {
+	public void EnregistrerMember(String id, String email, String firstName, byte isSuperMember, String lastName, String user, String pwd) {
 		
+		MemberAccountImpl mai= MemberAccountFactory.createMemberAndAccount(id, email, firstName, isSuperMember, lastName, user, pwd);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+
+		 //Persist entity 
+		// em.getTransaction().begin();
+		// em.persist(mai.getMember());
+		// em.persist(mai.getAccount());
+		// em.getTransaction().commit();
+		
+		// Retrieve all entities 
+		// @SuppressWarnings("unchecked")
+		 List<Member> paysans = em.createNamedQuery("Member.findAll").getResultList();
+		 System.out.println(paysans);
 	}
 	
 /*	public static void main(String[] args) {
