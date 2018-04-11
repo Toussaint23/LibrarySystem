@@ -6,7 +6,7 @@ public class MemberAccountFactory {
 		Member member = new Member(id, email, firstName, isSuperMember, lastName);
 		Account account = new Account(user, pwd);
 		
-		member.setAccounts(account);
+		member.setAccount(account);
 		account.setMember(member);
 		
 		return new  MemberAccountImpl(member, account);
