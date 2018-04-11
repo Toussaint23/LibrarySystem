@@ -32,6 +32,13 @@ public class Book implements Serializable {
 
 	public Book() {
 	}
+	
+	public Book(String isn, String author, String bookTitle, String bookType) {
+		this.isn = isn;
+		this.author = author;
+		this.bookTitle = bookTitle;
+		this.bookType = bookType;
+	}
 
 	public String getIsn() {
 		return this.isn;
