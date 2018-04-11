@@ -12,5 +12,15 @@ public class MemberAccountFactory {
 
 		return new MemberAccountImpl(member, account);
 	}
+	
+	public static MemberAccountImpl signUp(String user, String pwd) {
+		Member member = new Member();
+		Account account = new Account(user, pwd);
+		
+		member.setAccount(account);
+		account.setMember(member);
+		
+		return new  MemberAccountImpl(member, account);
+	}
 
 }

@@ -1,33 +1,46 @@
 package controller;
 
-import java.util.List;
-
+import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import model.Member;
+import model.Account;
 import model.MemberAccountFactory;
 import model.MemberAccountImpl;
 
 public class Admin {
-	public void EnregistrerMember(String id, String email, String firstName, byte isSuperMember, String lastName, String user, String pwd) {
+	public void RegisterMember(String id, String email, String firstName, int isSuperMember, String lastName, String user, String pwd) {
 		
 		MemberAccountImpl mai= MemberAccountFactory.createMemberAndAccount(id, email, firstName, isSuperMember, lastName, user, pwd);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
 		EntityManager em = emf.createEntityManager();
 
 		 //Persist entity 
-		// em.getTransaction().begin();
-		// em.persist(mai.getMember());
-		// em.persist(mai.getAccount());
-		// em.getTransaction().commit();
-		
-		// Retrieve all entities 
-		// @SuppressWarnings("unchecked")
-		 List<Member> paysans = em.createNamedQuery("Member.findAll").getResultList();
-		 System.out.println(paysans);
+		 em.getTransaction().begin();
+		 em.persist(mai.getMember());
+		 em.persist(mai.getAccount());
+		 em.getTransaction().commit();
+		 em.close();
 	}
+	
+public boolean signIn(String user, String pwd) {
+		
+		MemberAccountImpl mai= MemberAccountFactory.signUp(user, pwd);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		
+		 //Retrieve entity 
+		 Query query = em.createNamedQuery("Login.findAccount");
+		 query.setParameter(1, user).setParameter(2, pwd); 
+		 Object acct = query.getSingleResult();
+		 System.out.println(acct);
+		 //System.out.println(mai.getAccount().getId());
+		 
+		 return false;
+	}
+
+
 	
 /*	public static void main(String[] args) {
 		// TODO Auto-generated method stub
