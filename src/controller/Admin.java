@@ -22,10 +22,20 @@ public class Admin {
 
 	
 	
-	
-	
-	
-	
+	public void createBook(String isn, String author, String bookTitle,
+			String bookType, String edition, int isAvailable) {
+	/*	BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		
+		em.getTransaction().begin();
+		em.persist(bookFactory.getBook());
+		em.persist(bookFactory.getBookCopy());
+		em.getTransaction().commit();
+		em.close();*/
+	}
+
 	/*
 	 * public static void main(String[] args) { // TODO Auto-generated method stub
 	 * /* Create EntityManagerFactory EntityManagerFactory emf =
