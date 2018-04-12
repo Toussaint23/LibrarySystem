@@ -11,30 +11,32 @@ import javax.persistence.Persistence;
 import model.BookCopy;
 import model.BookCopyImplementation;
 import model.BookFactory;
+
 import model.MemberAccountFactory;
 import model.MemberAccountImpl;
 
 public class Admin {
-
-	public void RegisterMember(String id, String email, String firstName, int isSuperMember, String lastName,
+	public MemberAccountImpl RegisterMember(String id, String email, String firstName, int isSuperMember, String lastName,
 			String user, String pwd) {
 
 		MemberAccountImpl mai = MemberAccountFactory.createMemberAndAccount(id, email, firstName, isSuperMember,
 				lastName, user, pwd);
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
-		EntityManager em = emf.createEntityManager();
-
-		// Persist entity
-		em.getTransaction().begin();
-		em.persist(mai.getMember());
-		em.persist(mai.getAccount());
-		em.getTransaction().commit();
-		em.close();
+		
+		return mai;
 	}
+
+	public MemberAccountImpl signIn(String user, String pwd) {
+
+		MemberAccountImpl mai = MemberAccountFactory.signUp(user, pwd);
+
+		return mai;
+	}
+
+	
 	
 	public void createBook(String isn, String author, String bookTitle,
 			String bookType, String edition, int isAvailable) {
-		BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
+  	BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
 		EntityManager em = emf.createEntityManager();
@@ -71,6 +73,7 @@ public class Admin {
 		// System.out.println(mai.getAccount().getId());
 
 		return false;
+		em.close();*/
 	}
 
 	/*

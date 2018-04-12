@@ -10,6 +10,7 @@ public class MainTest {
 		admin.RegisterMember("st-0080", "chris@mu.edu", "Chrisner", (byte) 0, "Charles", "coco", "roro");
 		admin.RegisterMember("st-0078", "math@mu.edu", "Joseph", (byte) 1, "Mathieu", "momo", "poto");*/
 		
+
 		admin.createBook("7831", "Wole Soyinka", "Ibadan", "MBA", "first", 1);
 		admin.signIn("momo", "pot");
 		admin.fetchAvailableBooks();

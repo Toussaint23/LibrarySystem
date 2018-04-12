@@ -1,5 +1,10 @@
 package model;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 public class MemberAccountFactory {
 
 	public static MemberAccountImpl createMemberAndAccount(String id, String email, String firstName,
@@ -9,18 +14,46 @@ public class MemberAccountFactory {
 
 		member.setAccount(account);
 		account.setMember(member);
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+
+		// Persist entity
+		em.getTransaction().begin();
+		em.persist(member);
+		em.persist(account);
+		em.getTransaction().commit();
+		em.close();
 
 		return new MemberAccountImpl(member, account);
 	}
 	
 	public static MemberAccountImpl signUp(String user, String pwd) {
+		
 		Member member = new Member();
 		Account account = new Account(user, pwd);
+		Account result;
 		
-		member.setAccount(account);
-		account.setMember(member);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
 		
-		return new  MemberAccountImpl(member, account);
+		// Retrieve entity
+		Query query = em.createNamedQuery("Login.findAccount");
+		query.setParameter(1, user).setParameter(2, pwd);
+		
+		try {
+			result = (Account) query.getSingleResult();
+			member.setAccount(result);
+			account.setMember(result.getMember());
+			
+		} catch (javax.persistence.NoResultException e) {
+			result = null;
+		}
+		finally {
+			em.close();
+		}
+		
+		return (result == null) ? null : new  MemberAccountImpl(member, account);
 	}
 
 }
