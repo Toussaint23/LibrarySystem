@@ -1,5 +1,17 @@
 package controller;
 
+import javax.persistence.Query;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import model.BookCopy;
+import model.BookCopyImplementation;
+import model.BookFactory;
+
 import model.MemberAccountFactory;
 import model.MemberAccountImpl;
 
@@ -24,7 +36,7 @@ public class Admin {
 	
 	public void createBook(String isn, String author, String bookTitle,
 			String bookType, String edition, int isAvailable) {
-	/*	BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
+  	BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
 		EntityManager em = emf.createEntityManager();
@@ -33,6 +45,34 @@ public class Admin {
 		em.persist(bookFactory.getBook());
 		em.persist(bookFactory.getBookCopy());
 		em.getTransaction().commit();
+		em.close();
+	}
+	
+	public void fetchAvailableBooks() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		@SuppressWarnings("unchecked")
+		List<BookCopy> availableBooks = em.createNamedQuery("Member.fetchAvailableBooks").getResultList();
+		
+		for (BookCopy bc : availableBooks) {
+			System.out.println(bc.getEdition());
+		}
+	}
+
+	public boolean signIn(String user, String pwd) {
+
+		MemberAccountImpl mai = MemberAccountFactory.signUp(user, pwd);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+
+		// Retrieve entity
+		Query query = em.createNamedQuery("Login.findAccount");
+		query.setParameter(1, user).setParameter(2, pwd);
+		Object acct = query.getSingleResult();
+		System.out.println(acct);
+		// System.out.println(mai.getAccount().getId());
+
+		return false;
 		em.close();*/
 	}
 
