@@ -1,10 +1,14 @@
 package controller;
 
 import javax.persistence.Query;
+
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import model.BookCopy;
 import model.BookCopyImplementation;
 import model.BookFactory;
 import model.MemberAccountFactory;
@@ -40,6 +44,17 @@ public class Admin {
 		em.persist(bookFactory.getBookCopy());
 		em.getTransaction().commit();
 		em.close();
+	}
+	
+	public void fetchAvailableBooks() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		@SuppressWarnings("unchecked")
+		List<BookCopy> availableBooks = em.createNamedQuery("Member.fetchAvailableBooks").getResultList();
+		
+		for (BookCopy bc : availableBooks) {
+			System.out.println(bc.getEdition());
+		}
 	}
 
 	public boolean signIn(String user, String pwd) {

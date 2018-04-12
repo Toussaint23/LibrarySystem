@@ -12,6 +12,7 @@ public class MainTest {
 		
 		admin.createBook("7831", "Wole Soyinka", "Ibadan", "MBA", "first", 1);
 		admin.signIn("momo", "pot");
+		admin.fetchAvailableBooks();
 	}
 
 }
