@@ -13,4 +13,8 @@ public class BookFactory {
 		
 		return new BookCopyImplementation(book, bookCopy);
 	}
+	
+	public static void addBookCopy(String edition, int isAvailable) {
+		
+	}
 }

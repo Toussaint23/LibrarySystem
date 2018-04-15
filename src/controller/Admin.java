@@ -1,7 +1,11 @@
 package controller;
 
-import model.MemberAccountFactory;
-import model.MemberAccountImpl;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import model.*;
 
 public class Admin {
 	public MemberAccountImpl RegisterMember(String id, String email, String firstName, int isSuperMember, String lastName,
@@ -10,21 +14,49 @@ public class Admin {
 		MemberAccountImpl mai = MemberAccountFactory.createMemberAndAccount(id, email, firstName, isSuperMember,
 				lastName, user, pwd);
 		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+
+		// Persist entity
+		em.getTransaction().begin();
+		em.persist(mai.getMember());
+		em.persist(mai.getAccount());
+		em.getTransaction().commit();
+		em.close();
+		
 		return mai;
 	}
 
-	public MemberAccountImpl signIn(String user, String pwd) {
+	public Member signIn(String user, String pwd) {
 
 		MemberAccountImpl mai = MemberAccountFactory.signUp(user, pwd);
-
-		return mai;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		Account result = null;
+		
+		// Retrieve entity
+		Query query = em.createNamedQuery("Login.findAccount");
+		query.setParameter(1, user).setParameter(2, pwd);
+		
+		try {
+			result = (Account) query.getSingleResult();
+			mai.getAccount().setMember(result.getMember());
+			mai.getMember().setAccount(mai.getAccount());
+			
+		} catch (javax.persistence.NoResultException e) {
+			result = null;
+		}
+		finally {
+			em.close();
+		}
+		return mai.getAccount().getMember();
 	}
 
 	
 	
 	public void createBook(String isn, String author, String bookTitle,
 			String bookType, String edition, int isAvailable) {
-	/*	BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
+		BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType, edition, isAvailable);
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
 		EntityManager em = emf.createEntityManager();
@@ -33,7 +65,7 @@ public class Admin {
 		em.persist(bookFactory.getBook());
 		em.persist(bookFactory.getBookCopy());
 		em.getTransaction().commit();
-		em.close();*/
+		em.close();
 	}
 
 	/*
@@ -72,5 +104,35 @@ public class Admin {
 	 * 
 	 * 
 	 * }
+	 * 
+	 * 
+	 * 	public Member signIn(String user, String pwd) {
+
+		MemberAccountImpl mai = MemberAccountFactory.signUp(user, pwd);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		Account result = null;
+		
+		// Retrieve entity
+		Query query = em.createNamedQuery("Login.findAccount");
+		query.setParameter(1, user).setParameter(2, pwd);
+		
+		try {
+			result = (Account) query.getSingleResult();
+			mai.getAccount().setMember(result.getMember());
+			mai.getMember().setAccount(mai.getAccount());
+			
+		} catch (javax.persistence.NoResultException e) {
+			result = null;
+		}
+		finally {
+			System.out.println(result.getMember().getFirstName());
+			System.out.println(mai.getMember().getFirstName());
+			System.out.println(mai.getAccount().getId().getPassword());
+			System.out.println(mai.getAccount().getMember().getAccount().getId().getPassword());
+			em.close();
+		}
+		return mai.getAccount().getMember();
+	}
 	 */
 }
