@@ -1,3 +1,4 @@
+import controller.Admin;
 import gui.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,7 +15,7 @@ public class MainTest extends Application {
 		System.out.println("Toto");
 		Stage stage = new Stage();
 		//new SignIn().start(stage); good
-		new AppMain().start(stage);
+		new AppMain(null).start(stage);
 		
 	}
 	

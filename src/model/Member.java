@@ -20,26 +20,26 @@ public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String id;
+	protected String id;
 
-	private String email;
+	protected String email;
 
 	@Column(name="first_name")
-	private String firstName;
+	protected String firstName;
 
 	@Column(name="is_super_member")
-	private int isSuperMember;
+	protected int isSuperMember;
 
 	@Column(name="last_name")
-	private String lastName;
+	protected String lastName;
 
 	//bi-directional many-to-one association to Account
 	@OneToOne(mappedBy="member")
-	private Account account;
+	protected Account account;
 
 	//bi-directional many-to-one association to BookTransaction
 	@OneToMany(mappedBy="member")
-	private List<BookTransaction> bookTransactions;
+	protected List<BookTransaction> bookTransactions;
 
 	Member() {
 	}

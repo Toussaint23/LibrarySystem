@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane id="paneRegister" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="360.0" style="-fx-background-color: #c08000;" styleClass=".bodyimg" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField id="edition" focusTraversable="false" layoutX="42.0" layoutY="309.0" prefHeight="30.0" prefWidth="276.0" promptText="Edition" style="-fx-background-color: #FFFFFF;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button id="btn_connect" focusTraversable="false" layoutX="203.0" layoutY="461.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Submit">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button id="btn_register" focusTraversable="false" layoutX="42.0" layoutY="461.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Sign in">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <TextField id="title" focusTraversable="false" layoutX="42.0" layoutY="111.0" prefHeight="25.0" prefWidth="276.0" promptText="Title" style="-fx-background-color: #FFFFFF;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField id="isn" focusTraversable="false" layoutX="42.0" layoutY="179.0" prefHeight="25.0" prefWidth="276.0" promptText="ISN" style="-fx-background-color: #FFFFFF;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField id="author" focusTraversable="false" layoutX="42.0" layoutY="245.0" prefHeight="25.0" prefWidth="276.0" promptText="Author" style="-fx-background-color: #FFFFFF;">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label id="error_label" alignment="CENTER" layoutX="42.0" layoutY="429.0" prefHeight="17.0" prefWidth="276.0" text="Label" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox id="type" layoutX="42.0" layoutY="383.0" prefHeight="25.0" prefWidth="276.0" promptText="Type" visibleRowCount="2" />
+   </children>
+</Pane>

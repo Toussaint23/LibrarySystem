@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -37,9 +38,9 @@ public class Admin {
 		return mai.getAccount().getMember();
 	}
 
-	public MemberAccountImpl RegisterMember(String email, String firstName, int isSuperMember,
-			String lastName, String user, String pwd) {
-		String id = firstName.substring(0, 2)+lastName.substring(0,2)+"-"+Objects.hash(user,pwd);
+	public MemberAccountImpl RegisterMember(String email, String firstName, int isSuperMember, String lastName,
+			String user, String pwd) {
+		String id = firstName.substring(0, 2) + lastName.substring(0, 2) + "-" + Objects.hash(user, pwd);
 		MemberAccountImpl mai = MemberAccountFactory.createMemberAndAccount(id, email, firstName, isSuperMember,
 				lastName, user, pwd);
 
@@ -61,55 +62,108 @@ public class Admin {
 		return mai;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public void createBook(String isn, String author, String bookTitle, String bookType, String edition,
-			int isAvailable) {
-		BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType,
-				edition, isAvailable);
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
-		EntityManager em = emf.createEntityManager();
-
-		em.getTransaction().begin();
-		em.persist(bookFactory.getBook());
-		em.persist(bookFactory.getBookCopy());
-		em.getTransaction().commit();
-		em.close();
-	}
-
-	public void fetchAvailableBooksByName(String name) {
+	public List<BookCopy> fetchAvailableBooksByName(String name) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
 		EntityManager em = emf.createEntityManager();
 		@SuppressWarnings("unchecked")
 		List<Book> books = em.createNamedQuery("Book.findBookByName").setParameter(1, name).getResultList();
 		List<BookCopy> availableBooks = new ArrayList<>();
 
-		for (Book book : books) {
-			@SuppressWarnings("unchecked")
-			List<BookCopy> available = em.createNamedQuery("BookCopy.fetchAvailableBooksByIdBook")
-					.setParameter(1, book.getIsn()).getResultList();
-			availableBooks.addAll(available);
+		try {
+			for (Book book : books) {
+				@SuppressWarnings("unchecked")
+				List<BookCopy> available = em.createNamedQuery("BookCopy.fetchAvailableBooksByIdBook")
+						.setParameter(1, book.getIsn()).getResultList();
+				availableBooks.addAll(available);
+			}
+		} catch (Exception e) {
+			availableBooks = null;
+		} finally {
+			em.close();
 		}
 
-		for (BookCopy book : availableBooks) {
-			System.out.println(book.getId());
+		return availableBooks;
+	}
+
+	public boolean borrowsBookCopy(String identities, String memberId) {
+		Boolean result = true;
+		String[] id = identities.split(",");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+
+		try {
+			List<BookCopy> b = new ArrayList<>();
+			for (String identity : id) {
+				b.add(em.find(BookCopy.class, identity));
+			}
+
+			Member member = em.find(Member.class, memberId);
+			Calendar cal = Calendar.getInstance();
+			Date borrowDate = cal.getTime();
+			cal.add(Calendar.MONTH, -1);
+			Date returnDate = cal.getTime();
+			List<BookTransaction> transaction = MemberBookTransactionFactory.createListTransaction(borrowDate,
+					returnDate, member, b);
+
+			member.setBookTransactions(transaction);
+
+			em.getTransaction().begin();
+			for (BookTransaction bt : member.getBookTransactions()) {
+				em.persist(bt);
+				bt.getBookCopy().setIsAvailable(0);
+			}
+			em.getTransaction().commit();
 		}
+
+		catch (Exception e) {
+			result = false;
+		} finally {
+			em.close();
+		}
+
+		return result;
+	}
+
+	public boolean returnBookCopy(String identities, String memberId) {
+		Boolean result = true;
+		String[] id = identities.split(",");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			for (String identity : id) {
+				BookCopy bc = em.find(BookCopy.class, identity);
+				bc.setIsAvailable(1);
+			}
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			result = false;
+		} finally {
+			em.close();
+		}
+
+		return result;
+	}
+
+	public boolean createBook(String isn, String author, String bookTitle, String bookType, String edition,
+			int isAvailable) {
+		boolean result = true;
+		BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType,
+				edition, isAvailable);
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.persist(bookFactory.getBook());
+			em.persist(bookFactory.getBookCopy());
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			result = false;
+		} finally {
+			em.close();
+		}
+		return result;
 	}
 
 	public void fetchAvailableBooks() {
@@ -137,50 +191,6 @@ public class Admin {
 		System.out.println("Paysan after removal :- " + b.getBookTitle());
 
 		return b;
-	}
-
-	public Boolean borrowsBookCopy(String[] id, String memberId) {
-		// Remove entity
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
-		EntityManager em = emf.createEntityManager();
-		List<BookCopy> b = new ArrayList<>();
-		for (String identity : id) {
-			b.add(em.find(BookCopy.class, identity));
-		}
-
-		Member member = em.find(Member.class, memberId);
-
-		List<BookTransaction> transaction = MemberBookTransactionFactory.createListTransaction(new Date(), new Date(),
-				member, b);
-
-		member.setBookTransactions(transaction);
-
-		em.getTransaction().begin();
-		for (BookTransaction bt : member.getBookTransactions()) {
-			em.persist(bt);
-			bt.getBookCopy().setIsAvailable(0);
-		}
-		em.getTransaction().commit();
-
-		for (BookCopy bc : b)
-			System.out.println("Paysan after removal : " + bc.getBook().getBookTitle());
-		System.out.println("Paysan after removal : " + member.getFirstName());
-
-		return true;
-	}
-
-	public Boolean returnBookCopy(String[] id, String memberId) {
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		for (String identity : id) {
-			BookCopy bc = em.find(BookCopy.class, identity);
-			bc.setIsAvailable(1);
-		}
-		em.getTransaction().commit();
-		return true;
 	}
 
 	/*

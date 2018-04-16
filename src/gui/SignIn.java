@@ -57,7 +57,7 @@ public class SignIn extends Application {
 				currentMember = admin.signIn(user.getText(), pwd.getText());
 				if (currentMember != null) {
 					Stage stage = new Stage();
-					new AppMain().start(stage);
+					new AppMain(currentMember).start(stage);
 					this.root.getScene().getWindow().hide();
 				} else {
 					error1.setText("Connection failed");

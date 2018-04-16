@@ -28,7 +28,7 @@ public class SignUp extends Application {
 		Button btnRegister = (Button) scene.lookup("#btn_register");
 
 		btnConnect.setOnAction(evt -> {
-			login();
+			register();
 		});
 
 		btnRegister.setOnAction(evt -> {
@@ -42,7 +42,7 @@ public class SignUp extends Application {
 		launch(args);
 	}
 
-	public void login() {
+	public void register() {
 		try {
 			String firstname = ((TextField) scene.lookup("#firstname")).getText().trim();
 			String lastname = ((TextField) scene.lookup("#lastname")).getText().trim();
