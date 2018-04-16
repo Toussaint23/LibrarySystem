@@ -25,10 +25,10 @@ public class Account implements Serializable {
 	@JoinColumn(name="memberId")
 	private Member member;
 
-	public Account() {
+	Account() {
 	}
 
-	public Account(String user, String password) {
+	Account(String user, String password) {
 		this.id = new AccountPK();
 		this.id.setUsername(user);
 		this.id.setPassword(password);

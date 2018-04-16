@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane id="paneLogin" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="378.0" styleClass=".bodyimg" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <PasswordField id="password" focusTraversable="false" layoutX="39.0" layoutY="110.0" prefHeight="30.0" prefWidth="276.0" promptText="Password">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </PasswordField>
+      <TextField id="username" focusTraversable="false" layoutX="38.0" layoutY="43.0" prefHeight="30.0" prefWidth="276.0" promptText="Username">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button id="btn_connect" focusTraversable="false" layoutX="199.0" layoutY="165.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Connect">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button id="btn_register" focusTraversable="false" layoutX="38.0" layoutY="165.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Register">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label id="error_label1" alignment="CENTER" contentDisplay="CENTER" layoutX="39.0" layoutY="204.0" prefHeight="30.0" prefWidth="276.0" style="-fx-background-color: #FFFFFF;" text="Connection failed!" textAlignment="CENTER" textFill="#fc0303" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label id="error_label2" alignment="CENTER" layoutX="39.0" layoutY="234.0" prefHeight="30.0" prefWidth="276.0" style="-fx-background-color: #FFFFFF;" text="If you don't have an account &quot;Register&quot;" textFill="#fc0303" visible="false">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

@@ -11,7 +11,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="book_copies")
-@NamedQuery(name="BookCopy.findAll", query="SELECT b FROM BookCopy b")
+@NamedQueries({
+	@NamedQuery(name="BookCopy.findAll", query="SELECT b FROM BookCopy b"),
+	@NamedQuery(name="BookCopy.fetchAvailableBooksByIdBook", query="SELECT bc FROM BookCopy bc WHERE bc.book.isn = ?1 AND bc.isAvailable = 1"),
+	@NamedQuery(name="BookCopy.fetchAvailableBooks", query="SELECT bc FROM BookCopy bc WHERE bc.isAvailable = 1")
+})
 public class BookCopy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +63,7 @@ public class BookCopy implements Serializable {
 		return this.isAvailable;
 	}
 
-	public void setIsAvailable(byte isAvailable) {
+	public void setIsAvailable(int isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 

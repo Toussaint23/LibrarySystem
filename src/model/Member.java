@@ -13,7 +13,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="members")
-@NamedQuery(name="Member.findAll", query="SELECT m FROM Member m")
+@NamedQueries({
+	@NamedQuery(name="Member.findAll", query="SELECT m FROM Member m")
+})
 public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -39,11 +41,11 @@ public class Member implements Serializable {
 	@OneToMany(mappedBy="member")
 	private List<BookTransaction> bookTransactions;
 
-	public Member() {
+	Member() {
 	}
 
 	
-	public Member(String id, String email, String firstName, int isSuperMember, String lastName) {
+	Member(String id, String email, String firstName, int isSuperMember, String lastName) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;

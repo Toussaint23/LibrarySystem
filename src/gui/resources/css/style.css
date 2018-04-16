@@ -1,0 +1,23 @@
+#paneLogin{
+	-fx-background-image: url("../img/bckg.bmp");
+	 -fx-background-repeat: stretch;   
+    -fx-background-size: 360 275;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#paneRegister{
+	-fx-background-image: url("../img/bannerRegis.bmp");
+	 -fx-background-repeat: stretch;   
+    -fx-background-size: 360 75;
+    -fx-background-position: top center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#paneAppMain{
+	-fx-background-image: url("../img/bannerRegis.bmp");
+	 -fx-background-repeat: stretch;   
+    -fx-background-size: 750 75;
+    -fx-background-position: top center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}

@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -37,6 +38,14 @@ public class BookTransaction implements Serializable {
 
 	public BookTransaction() {
 	}
+	
+	public BookTransaction(Date borrowDate, Date returnDate, Member member, BookCopy bookCopy) {
+		this.borrowDate = borrowDate;
+		this.returnDate = returnDate;
+		this.member = member;
+		this.bookCopy = bookCopy;
+	}
+	
 
 	public String getId() {
 		return this.id;
