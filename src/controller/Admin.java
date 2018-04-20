@@ -144,12 +144,35 @@ public class Admin {
 
 		return result;
 	}
+	
+	public Book removeBook(String id) {
+		// Remove entity
 
-	public boolean createBook(String isn, String author, String bookTitle, String bookType, String edition,
-			int isAvailable) {
-		boolean result = true;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
+		EntityManager em = emf.createEntityManager();
+		Book b = em.find(Book.class, id);
+
+		try {
+		em.getTransaction().begin();
+		em.remove(b);
+		em.getTransaction().commit();
+		}catch(Exception e) {
+			b = null;
+		}
+		
+
+		return b;
+	}
+	
+	
+	
+	
+	
+	public BookCopyImplementation createBook(String isn, String author, String bookTitle, String bookType, String edition,
+			int isAvailable, int quantity) {
+		
 		BookCopyImplementation bookFactory = BookFactory.createBookAndBookCopy(isn, author, bookTitle, bookType,
-				edition, isAvailable);
+				edition, isAvailable, quantity);
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
 		EntityManager em = emf.createEntityManager();
@@ -157,13 +180,25 @@ public class Admin {
 			em.getTransaction().begin();
 			em.persist(bookFactory.getBook());
 			em.persist(bookFactory.getBookCopy());
+			//em.persist(bookFactory.getBookCopy().getBook().getBookCopies());
 			em.getTransaction().commit();
+			
+
+			/*EntityManager em1 = emf.createEntityManager();
+			for(BookCopy bc : bookFactory.getBook().getBookCopies()) {
+				em1.getTransaction().begin();
+				em1.persist(bookFactory.getBook());
+				em1.persist(bc);
+				em1.persist(bc);
+				em1.getTransaction().commit();
+				em1.close();
+			}*/
 		} catch (Exception e) {
-			result = false;
+			bookFactory = null;
 		} finally {
 			em.close();
 		}
-		return result;
+		return bookFactory;
 	}
 
 	public void fetchAvailableBooks() {
@@ -177,21 +212,6 @@ public class Admin {
 		}
 	}
 
-	public Book removeBook(String id) {
-		// Remove entity
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibrarySystem");
-		EntityManager em = emf.createEntityManager();
-		Book b = em.find(Book.class, id);
-
-		em.getTransaction().begin();
-		em.remove(b);
-		em.getTransaction().commit();
-
-		System.out.println("Paysan after removal :- " + b.getBookTitle());
-
-		return b;
-	}
 
 	/*
 	 * public static void main(String[] args) { // TODO Auto-generated method stub

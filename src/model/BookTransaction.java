@@ -36,10 +36,10 @@ public class BookTransaction implements Serializable {
 	@JoinColumn(name="book_copy_id")
 	private BookCopy bookCopy;
 
-	public BookTransaction() {
+	BookTransaction() {
 	}
 	
-	public BookTransaction(Date borrowDate, Date returnDate, Member member, BookCopy bookCopy) {
+	BookTransaction(Date borrowDate, Date returnDate, Member member, BookCopy bookCopy) {
 		this.borrowDate = borrowDate;
 		this.returnDate = returnDate;
 		this.member = member;

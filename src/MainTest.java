@@ -14,8 +14,7 @@ public class MainTest extends Application {
 		// TODO Auto-generated method stub
 		System.out.println("Toto");
 		Stage stage = new Stage();
-		//new SignIn().start(stage); good
-		new AppMain(null).start(stage);
+		new SignIn().start(stage); 
 		
 	}
 	

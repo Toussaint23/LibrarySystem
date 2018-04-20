@@ -35,10 +35,10 @@ public class BookCopy implements Serializable {
 	@OneToMany(mappedBy="bookCopy")
 	private List<BookTransaction> bookTransactions;
 
-	public BookCopy() {
+	BookCopy() {
 	}
 	
-	public BookCopy(String edition, int isAvailable) {
+	BookCopy(String edition, int isAvailable) {
 		this.edition = edition;
 		this.isAvailable = isAvailable;
 	}

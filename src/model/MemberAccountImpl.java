@@ -1,6 +1,6 @@
 package model;
 
-public class MemberAccountImpl implements MemberAccountInterface {
+public class MemberAccountImpl {
 
 	Member member;
 	Account account;
@@ -10,13 +10,13 @@ public class MemberAccountImpl implements MemberAccountInterface {
 		this.account = account;
 	}
 
-	@Override
+	
 	public Member getMember() {
 		// TODO Auto-generated method stub
 		return member;
 	}
 
-	@Override
+	
 	public Account getAccount() {
 		// TODO Auto-generated method stub
 		return account;

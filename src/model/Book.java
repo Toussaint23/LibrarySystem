@@ -31,13 +31,13 @@ public class Book implements Serializable {
 	private String bookType;
 
 	//bi-directional many-to-one association to BookCopy
-	@OneToMany(mappedBy="book")
+	@OneToMany(mappedBy="book", cascade = CascadeType.PERSIST)
 	private List<BookCopy> bookCopies;
 
-	public Book() {
+	Book() {
 	}
 	
-	public Book(String isn, String author, String bookTitle, String bookType) {
+	Book(String isn, String author, String bookTitle, String bookType) {
 		this.isn = isn;
 		this.author = author;
 		this.bookTitle = bookTitle;
